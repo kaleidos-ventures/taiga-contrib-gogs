@@ -4,8 +4,6 @@ gogsInfo = {
     slug: "gogs"
     name: "Gogs"
     type: "admin"
-    adminController: "ContribGogsAdmin"
-    adminPartial: "contrib/gogs/admin.html"
     module: 'taigaContrib.gogs'
 }
 
@@ -25,43 +23,24 @@ class GogsAdmin
     @.$inject = [
         "$rootScope",
         "$scope",
-        "$tgModel",
-        "$tgRepo",
         "$tgResources"
-        "$routeParams",
-        "$appTitle"
+        "$appTitle",
+        "$tgConfirm",
     ]
 
-    constructor: (@rootScope, @scope, @model, @repo, @rs, @params, @appTitle, @confirm) ->
-        @scope.sectionName = "Gogs" #i18n
-        @scope.project = {}
-        @scope.adminPlugins = _.filter(@rootScope.contribPlugins, (plugin) -> plugin.type == "admin")
+    constructor: (@rootScope, @scope, @rs, @appTitle, @confirm) ->
+        @scope.sectionName = "Gogs"
+        @scope.sectionSlug = "gogs"
 
-        promise = @.loadInitialData()
+        @scope.$on 'project:loaded', =>
+            promise = @rs.modules.list(@scope.projectId, "gogs")
 
-        promise.then () =>
-            @appTitle.set("Gogs - " + @scope.project.name)
+            promise.then (gogs) =>
+                @scope.gogs = gogs
+                @appTitle.set("Gogs - " + @scope.project.name)
 
-        promise.then null, =>
-            @confirm.notify("error")
-
-    loadGogsHooks: ->
-        return @rs.modules.list(@scope.projectId, "gogs").then (gogs) =>
-            @scope.gogs = gogs
-
-    loadProject: ->
-        return @rs.projects.get(@scope.projectId).then (project) =>
-            @scope.project = project
-            @scope.$emit('project:loaded', project)
-            return project
-
-    loadInitialData: ->
-        promise = @repo.resolve({pslug: @params.pslug}).then (data) =>
-            @scope.projectId = data.project
-            return data
-
-        return promise.then(=> @.loadProject())
-                      .then(=> @.loadGogsHooks())
+            promise.then null, =>
+                @confirm.notify("error")
 
 module.controller("ContribGogsAdminController", GogsAdmin)
 
