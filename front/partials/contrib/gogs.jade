@@ -1,3 +1,5 @@
+|module.run(['$templateCache', ($templateCache) ->
+|  $templateCache.put('contrib/gogs', '''
 div(tg-gogs-webhooks, ng-controller="ContribGogsAdminController as ctrl")
     header
         h1(tg-main-title)
@@ -24,3 +26,4 @@ div(tg-gogs-webhooks, ng-controller="ContribGogsAdminController as ctrl")
     a.help-button(href="https://taiga.io/support/gogs-integration/", target="_blank")
         span.icon.icon-help
         span Do you need help? Check out our support page!
+|''')]);

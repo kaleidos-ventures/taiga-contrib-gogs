@@ -1,0 +1,30 @@
+{
+  "name": "taiga-contrib-gogs",
+  "version": "0.0.1",
+  "description": "Taiga contrib plugin for gogs integration",
+  "main": "index.js",
+  "scripts": {
+    "build-jade": "node_modules/jade/bin/jade.js partials/contrib/gogs.jade -o dist/",
+    "build-coffee": "cat coffee/gogs.coffee dist/gogs.html | node_modules/coffee-script/bin/coffee --compile --stdio > dist/gogs.js",
+    "build": "npm run build-jade; npm run build-coffee"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/taigaio/taiga-contrib-gogs"
+  },
+  "keywords": [
+    "gogs",
+    "taiga",
+    "integration"
+  ],
+  "author": "Jesús Espino <jesus.espino@kaleidos.net>",
+  "license": "AGPL",
+  "bugs": {
+    "url": "https://github.com/taigaio/taiga-contrib-gogs/issues"
+  },
+  "homepage": "https://github.com/taigaio/taiga-contrib-gogs",
+  "dependencies": {
+    "coffee-script": "^1.8.0",
+    "jade": "^1.9.1"
+  }
+}
