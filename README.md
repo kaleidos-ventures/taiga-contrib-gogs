@@ -17,7 +17,7 @@ In your Taiga back python virtualenv install the pip package `taiga-contrib-gogs
 Modify your settings/local.py and include the line:
 
 ```python
-  INSTALLED_APPS += "taiga_contrib_gogs"
+  INSTALLED_APPS += ["taiga_contrib_gogs"]
 ```
 
 The run the migrations to generate the new need table:
