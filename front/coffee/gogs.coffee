@@ -54,13 +54,11 @@ GogsWebhooksDirective = ($repo, $confirm, $loading) ->
 
             $loading.start(submitButton)
 
-            if $scope.gogshook.id
-                promise = $repo.save($scope.gogshook)
-            else
-                promise = $repo.create("gogs", $scope.gogshook)
+            promise = $repo.saveAttribute($scope.gogs, "gogs")
             promise.then ->
                 $loading.finish(submitButton)
                 $confirm.notify("success")
+                $scope.$emit("project:modules:reload")
 
             promise.then null, (data) ->
                 $loading.finish(submitButton)

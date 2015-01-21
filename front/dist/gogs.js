@@ -75,14 +75,11 @@
             return;
           }
           $loading.start(submitButton);
-          if ($scope.gogshook.id) {
-            promise = $repo.save($scope.gogshook);
-          } else {
-            promise = $repo.create("gogs", $scope.gogshook);
-          }
+          promise = $repo.saveAttribute($scope.gogs, "gogs");
           promise.then(function() {
             $loading.finish(submitButton);
-            return $confirm.notify("success");
+            $confirm.notify("success");
+            return $scope.$emit("project:modules:reload");
           });
           return promise.then(null, function(data) {
             $loading.finish(submitButton);
@@ -108,7 +105,7 @@
 
   module.run([
     '$templateCache', function($templateCache) {
-      return $templateCache.put('contrib/gogs', '<div tg-gogs-webhooks="tg-gogs-webhooks" ng-controller="ContribGogsAdminController as ctrl"><header><h1 tg-main-title="tg-main-title"></h1></header><form><fieldset><label for="secret-key">Secret key</label><input type="text" name="secret-key" ng-model="gogs.secret" placeholder="Secret key" id="secret-key"/></fieldset><fieldset><div tg-select-input-text="tg-select-input-text" class="select-input-text"><div><label for="payload-url">Payload URL</label><div class="field-with-option"><input type="text" ng-model="gogs.webhooks_url" name="payload-url" readonly="readonly" placeholder="Payload URL" id="payload-url"/><div class="option-wrapper select-input-content"><div class="icon icon-copy"></div></div></div><div class="help-copy">Copy to clipboard: Ctrl+C</div></div></div></fieldset><button type="submit" class="hidden"></button><a href="" title="Save" class="button button-green submit-button">Save</a></form><a href="https://taiga.io/support/gogs-integration/" target="_blank" class="help-button"><span class="icon icon-help"></span><span>Do you need help? Check out our support page!</span></a></div>');
+      return $templateCache.put('contrib/gogs', '<div contrib-gogs-webhooks="contrib-gogs-webhooks" ng-controller="ContribGogsAdminController as ctrl"><header><h1 tg-main-title="tg-main-title"></h1></header><form><fieldset><label for="secret-key">Secret key</label><input type="text" name="secret-key" ng-model="gogs.secret" placeholder="Secret key" id="secret-key"/></fieldset><fieldset><div tg-select-input-text="tg-select-input-text" class="select-input-text"><div><label for="payload-url">Payload URL</label><div class="field-with-option"><input type="text" ng-model="gogs.webhooks_url" name="payload-url" readonly="readonly" placeholder="Payload URL" id="payload-url"/><div class="option-wrapper select-input-content"><div class="icon icon-copy"></div></div></div><div class="help-copy">Copy to clipboard: Ctrl+C</div></div></div></fieldset><button type="submit" class="hidden"></button><a href="" title="Save" class="button button-green submit-button">Save</a></form><a href="https://taiga.io/support/gogs-integration/" target="_blank" class="help-button"><span class="icon icon-help"></span><span>Do you need help? Check out our support page!</span></a></div>');
     }
   ]);
 
