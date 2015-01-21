@@ -16,8 +16,6 @@
 
 from django.apps import AppConfig
 
-from .api import GogsViewSet
-
 from taiga.contrib_routers import router
 
 from .api import GogsViewSet
@@ -30,4 +28,3 @@ class TaigaContribGogsAppConfig(AppConfig):
 
     def ready(self):
         pass
-
