@@ -35,8 +35,10 @@ Download in your `dist/js/` directory of Taiga front the `taiga-contrib-gogs` co
   wget "https://raw.githubusercontent.com/taigaio/taiga-contrib-gogs/stable/front/dist/gogs.js"
 ```
 
-Include the file in the `dist/index.html` file between the `libs.js` and `apps.js` with this line:
+Include in your dist/js/conf.json in the contribPlugins list the value `"/js/gogs.js"`:
 
-```html
-  <script src="/js/gogs.js"></script>
+```json
+...
+    "contribPlugins": ["/js/gogs.js"]
+...
 ```
