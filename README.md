@@ -18,7 +18,7 @@ Modify your settings/local.py and include the lines:
 
 ```python
   INSTALLED_APPS += ["taiga_contrib_gogs"]
-  PROJECT_MODULES_CONFIGURATORS["gogs"] = "taiga_contrig_gogs.services.get_or_generate_config"
+  PROJECT_MODULES_CONFIGURATORS["gogs"] = "taiga_contrib_gogs.services.get_or_generate_config"
 ```
 
 The run the migrations to generate the new need table:
