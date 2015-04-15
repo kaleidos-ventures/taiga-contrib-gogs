@@ -30,9 +30,8 @@ def create_gogs_system_user(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('users', '0007_auto_20150209_1611')
+        ('users', '0010_auto_20150414_0936')
     ]
 
     operations = [
