@@ -2,7 +2,11 @@
 |  $templateCache.put('contrib/gogs', '''
 div(contrib-gogs-webhooks, ng-controller="ContribGogsAdminController as ctrl")
     header
-        h1(tg-main-title)
+        h1
+            span.project-name
+                | {{::project.name}}
+            span.green
+                | {{::sectionName}}
 
     form
         fieldset
