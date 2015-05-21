@@ -1,7 +1,7 @@
 # Changelog #
 
 
-## 0.0.5 (unreleased)
+## 0.0.5 (2015-05-21)
 - Add compatibility with taiga-back 1.7.
 
 
