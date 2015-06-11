@@ -1,6 +1,10 @@
 # Changelog #
 
 
+## 0.0.7 (unreleased)
+- Add compatibility with taiga-back 1.8.
+
+
 ## 0.0.6 (2015-05-25)
 - Force to use Django 1.7.8
 
