@@ -24,12 +24,12 @@ class GogsAdmin
         "$rootScope",
         "$scope",
         "$tgResources"
-        "$appTitle",
+        "tgAppMetaService",
         "$tgConfirm",
     ]
 
-    constructor: (@rootScope, @scope, @rs, @appTitle, @confirm) ->
-        @scope.sectionName = "Gogs"
+    constructor: (@rootScope, @scope, @rs, @appMetaService, @confirm) ->
+        @scope.sectionName = "Gogs" # i18n
         @scope.sectionSlug = "gogs"
 
         @scope.$on 'project:loaded', =>
@@ -37,7 +37,10 @@ class GogsAdmin
 
             promise.then (gogs) =>
                 @scope.gogs = gogs
-                @appTitle.set("Gogs - " + @scope.project.name)
+
+                title = "#{@scope.sectionName} - Plugins - #{@scope.project.name}" # i18n
+                description = @scope.project.description
+                @appMetaService.setAll(title, description)
 
             promise.then null, =>
                 @confirm.notify("error")

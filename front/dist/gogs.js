@@ -29,13 +29,13 @@
   };
 
   GogsAdmin = (function() {
-    GogsAdmin.$inject = ["$rootScope", "$scope", "$tgResources", "$appTitle", "$tgConfirm"];
+    GogsAdmin.$inject = ["$rootScope", "$scope", "$tgResources", "tgAppMetaService", "$tgConfirm"];
 
-    function GogsAdmin(rootScope, scope, rs, appTitle, confirm) {
+    function GogsAdmin(rootScope, scope, rs, appMetaService, confirm) {
       this.rootScope = rootScope;
       this.scope = scope;
       this.rs = rs;
-      this.appTitle = appTitle;
+      this.appMetaService = appMetaService;
       this.confirm = confirm;
       this.scope.sectionName = "Gogs";
       this.scope.sectionSlug = "gogs";
@@ -44,8 +44,11 @@
           var promise;
           promise = _this.rs.modules.list(_this.scope.projectId, "gogs");
           promise.then(function(gogs) {
+            var description, title;
             _this.scope.gogs = gogs;
-            return _this.appTitle.set("Gogs - " + _this.scope.project.name);
+            title = _this.scope.sectionName + " - Plugins - " + _this.scope.project.name;
+            description = _this.scope.project.description;
+            return _this.appMetaService.setAll(title, description);
           });
           return promise.then(null, function() {
             return _this.confirm.notify("error");
