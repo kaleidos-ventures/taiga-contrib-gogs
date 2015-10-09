@@ -1,6 +1,6 @@
 {
   "name": "taiga-contrib-gogs",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Taiga contrib plugin for gogs integration",
   "main": "index.js",
   "scripts": {
