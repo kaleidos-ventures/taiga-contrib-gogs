@@ -1,8 +1,11 @@
 # Changelog #
 
 
-## 0.0.8 (2015-11-02)
+## 0.0.9 (2015-11-02)
 - Force to use Django == 1.8.5
+
+
+## 0.0.8 (2015-11-02)
 - Add compatibility with taiga-back 1.9.
 
 
