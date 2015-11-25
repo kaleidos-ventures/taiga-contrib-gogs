@@ -39,10 +39,10 @@ Download in your `dist/js/` directory of Taiga front the `taiga-contrib-gogs` co
   wget "https://raw.githubusercontent.com/taigaio/taiga-contrib-gogs/$(pip show taiga-contrib-gogs | awk '/^Version: /{print $2}')/front/dist/gogs.js"
 ```
 
-Include in your dist/js/conf.json in the contribPlugins list the value `"/js/gogs.js"`:
+Include in your dist/js/conf.json in the contribPlugins list the value `"js/gogs.js"`:
 
 ```json
 ...
-    "contribPlugins": ["/js/gogs.js"]
+    "contribPlugins": ["js/gogs.js"]
 ...
 ```
