@@ -1,0 +1,9 @@
+{
+    "name": "Gogs",
+    "slug": "gogs",
+    "description": "Integrate Taiga with a Gogs server (https://gogs.io/)",
+    "type": "admin",
+    "module": "taigaContrib.gogs",
+    "template": "plugin/gogs",
+    "js": "/plugins/gogs/gogs.js"
+}

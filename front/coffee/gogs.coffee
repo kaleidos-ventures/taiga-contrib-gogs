@@ -1,23 +1,5 @@
-@.taigaContribPlugins = @.taigaContribPlugins or []
-
-gogsInfo = {
-    slug: "gogs"
-    name: "Gogs"
-    type: "admin"
-    module: 'taigaContrib.gogs'
-}
-
-@.taigaContribPlugins.push(gogsInfo)
-
-module = angular.module('taigaContrib.gogs', [])
-
 debounce = (wait, func) ->
     return _.debounce(func, wait, {leading: true, trailing: false})
-
-initGogsPlugin = ($tgUrls) ->
-    $tgUrls.update({
-        "gogs": "/gogs-hook"
-    })
 
 class GogsAdmin
     @.$inject = [
@@ -45,7 +27,6 @@ class GogsAdmin
             promise.then null, =>
                 @confirm.notify("error")
 
-module.controller("ContribGogsAdminController", GogsAdmin)
 
 GogsWebhooksDirective = ($repo, $confirm, $loading) ->
     link = ($scope, $el, $attrs) ->
@@ -78,6 +59,14 @@ GogsWebhooksDirective = ($repo, $confirm, $loading) ->
 
     return {link:link}
 
+
+module = angular.module('taigaContrib.gogs', [])
+
+module.controller("ContribGogsAdminController", GogsAdmin)
 module.directive("contribGogsWebhooks", ["$tgRepo", "$tgConfirm", "$tgLoading", GogsWebhooksDirective])
 
+initGogsPlugin = ($tgUrls) ->
+    $tgUrls.update({
+        "gogs": "/gogs-hook"
+    })
 module.run(["$tgUrls", initGogsPlugin])
