@@ -1,12 +1,14 @@
 {
   "name": "taiga-contrib-gogs",
-  "version": "0.0.9",
+  "version": "1.9.1",
   "description": "Taiga contrib plugin for gogs integration",
   "main": "index.js",
   "scripts": {
-    "build-jade": "node_modules/jade/bin/jade.js partials/contrib/gogs.jade -o dist/",
-    "build-coffee": "cat coffee/gogs.coffee dist/gogs.html | node_modules/coffee-script/bin/coffee --compile --stdio > dist/gogs.js",
-    "build": "npm run build-jade; npm run build-coffee"
+    "clean": "rm -rf dist || true",
+    "create-dist": "mkdir -p dist",
+    "copy-statics": "cp gogs.json dist/",
+    "build-js": "{ cat 'coffee/gogs.coffee'; node_modules/jade/bin/jade.js < 'partials/gogs.jade'; } | node_modules/coffee-script/bin/coffee --compile --stdio > dist/gogs.js",
+    "build": "npm run clean; npm run create-dist; npm run copy-statics; npm run build-js"
   },
   "repository": {
     "type": "git",
