@@ -56,7 +56,8 @@ div(contrib-gogs-webhooks, ng-controller="ContribGogsAdminController as ctrl")
                             id="payload-url"
                         )
                         .option-wrapper.select-input-content
-                            .icon.icon-copy
+                            svg.icon.icon-clipboard
+                                use(xlink:href="#icon-clipboard")
                     .help-copy Copy to clipboard: Ctrl+C
 
         button(type="submit", class="hidden")
@@ -64,6 +65,7 @@ div(contrib-gogs-webhooks, ng-controller="ContribGogsAdminController as ctrl")
             span Save
 
     a.help-button(href="https://taiga.io/support/gogs-integration/", target="_blank")
-        span.icon.icon-help
+        svg.icon.icon-question
+            use(xlink:href="#icon-question")
         span Do you need help? Check out our support page!
 |''')]);
