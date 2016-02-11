@@ -5,5 +5,6 @@
     "type": "admin",
     "module": "taigaContrib.gogs",
     "template": "plugin/gogs",
+    "template": "/plugins/gogs/gogs.html",
     "js": "/plugins/gogs/gogs.js"
 }
