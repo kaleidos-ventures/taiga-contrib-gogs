@@ -17,15 +17,13 @@
 
 from django.apps import AppConfig
 
-from taiga.contrib_routers import router
-
-from .api import GogsViewSet
-router.register(r"gogs-hook", GogsViewSet, base_name="gogs-hook")
-
 
 class TaigaContribGogsAppConfig(AppConfig):
     name = "taiga_contrib_gogs"
     verbose_name = "Taiga contrib gogs App Config"
 
     def ready(self):
-        pass
+        from taiga.contrib_routers import router
+        from .api import GogsViewSet
+
+        router.register(r"gogs-hook", GogsViewSet, base_name="gogs-hook")

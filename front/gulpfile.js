@@ -42,3 +42,5 @@ gulp.task('watch', function() {
 });
 
 gulp.task('default', ['copy-config', 'compile', 'watch']);
+
+gulp.task('build', ['copy-config', 'compile', ]);
