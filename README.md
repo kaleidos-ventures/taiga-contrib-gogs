@@ -10,7 +10,7 @@ Installation
 ------------
 ### Production env
 
-### Taiga Back
+#### Taiga Back
 
 In your Taiga back python virtualenv install the pip package `taiga-contrib-gogs` with:
 
@@ -31,7 +31,7 @@ The run the migrations to generate the new need table:
   python manage.py migrate taiga_contrib_gogs
 ```
 
-### Taiga Front
+#### Taiga Front
 
 Download in your `dist/plugins/` directory of Taiga front the `taiga-contrib-gogs` compiled code (you need subversion in your system):
 
