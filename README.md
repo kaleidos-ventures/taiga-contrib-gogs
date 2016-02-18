@@ -18,7 +18,7 @@ In your Taiga back python virtualenv install the pip package `taiga-contrib-gogs
   pip install taiga-contrib-gogs
 ```
 
-Modify `taiga-back/settings/local.py` and include the lines:
+Modify in `taiga-back` your `settings/local.py` and include the line:
 
 ```python
   INSTALLED_APPS += ["taiga_contrib_gogs"]
@@ -65,7 +65,7 @@ Clone the repo and
   pip install -e .
 ```
 
-Modify `taiga-back/settings/local.py` and include the lines:
+Modify in `taiga-back` your `settings/local.py` and include the line:
 
 ```python
   INSTALLED_APPS += ["taiga_contrib_gogs"]
@@ -80,12 +80,7 @@ The run the migrations to generate the new need table:
 
 #### Taiga Front
 
-```bash
-  npm install
-  gulp
-```
-
-Link `dist` in `taiga-front` plugins directory:
+After clone the repo link `dist` in `taiga-front` plugins directory:
 
 ```bash
   cd taiga-front/dist
@@ -105,9 +100,13 @@ Include in 'dist/conf.json' in the 'contribPlugins' list the value `"/plugins/go
 ...
 ```
 
-If you only want to build `dist` use:
+In the plugin source dir `taiga-contrib-gogs/front` run
 
 ```bash
-  npm install
-  gulp build
+npm install
 ```
+and use:
+
+- `gulp` to regenerate the source and watch for changes.
+- `gulp build` to only regenerate the source.
+
