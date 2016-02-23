@@ -13,7 +13,7 @@
     "integration"
   ],
   "author": "Jesús Espino <jesus.espino@kaleidos.net>",
-  "license": "AGPL",
+  "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/taigaio/taiga-contrib-gogs/issues"
   },
