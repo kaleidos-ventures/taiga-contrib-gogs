@@ -4,7 +4,6 @@
     "description": "Integrate Taiga with a Gogs server (https://gogs.io/)",
     "type": "admin",
     "module": "taigaContrib.gogs",
-    "template": "plugin/gogs",
     "template": "/plugins/gogs/gogs.html",
     "js": "/plugins/gogs/gogs.js"
 }
