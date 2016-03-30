@@ -16,6 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.apps import AppConfig
+from django.conf.urls import include, url
 
 
 class TaigaContribGogsAppConfig(AppConfig):
@@ -23,7 +24,10 @@ class TaigaContribGogsAppConfig(AppConfig):
     verbose_name = "Taiga contrib gogs App Config"
 
     def ready(self):
-        from taiga.contrib_routers import router
+        from taiga.base import routers
+        from taiga.urls import urlpatterns
         from .api import GogsViewSet
 
+        router = routers.DefaultRouter(trailing_slash=False)
         router.register(r"gogs-hook", GogsViewSet, base_name="gogs-hook")
+        urlpatterns.append(url(r'^api/v1/', include(router.urls)))
