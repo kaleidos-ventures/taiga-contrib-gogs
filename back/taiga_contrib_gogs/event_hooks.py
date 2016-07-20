@@ -15,76 +15,45 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.utils.translation import ugettext_lazy as _
-
-from taiga.projects.models import IssueStatus, TaskStatus, UserStoryStatus
-
-from taiga.projects.issues.models import Issue
-from taiga.projects.tasks.models import Task
-from taiga.projects.userstories.models import UserStory
-from taiga.projects.history.services import take_snapshot
-from taiga.projects.notifications.services import send_notifications
-from taiga.hooks.event_hooks import BaseEventHook
-from taiga.hooks.exceptions import ActionSyntaxException
-
-from .services import get_gogs_user
-
 import re
+import os.path
+
+from taiga.hooks.event_hooks import BaseStatusChangeEventHook
 
 
-class PushEventHook(BaseEventHook):
-    def process_event(self):
-        if self.payload is None:
-            return
+class BaseGogsEventHook():
+    platform = "Gogs"
+    platform_prefix = "go"
+    platform_slug = "gogs"
 
+    def replace_gogs_references(self, project_url, wiki_text):
+        if wiki_text is None:
+            wiki_text = ""
+
+        template = "\g<1>[Gogs#\g<2>]({}/issues/\g<2>)\g<3>".format(project_url)
+        return re.sub(r"(\s|^)#(\d+)(\s|$)", template, wiki_text, 0, re.M)
+
+
+class PushEventHook(BaseGogsEventHook, BaseStatusChangeEventHook):
+    def get_data(self):
+        result = []
         commits = self.payload.get("commits", [])
-        for commit in commits:
+        project_url = self.payload.get("repository", {}).get("url", None)
+
+        for commit in filter(None, commits):
+            p = re.compile("tg-(\d+) +#([-\w]+)")
             message = commit.get("message", None)
-            gogs_user = commit.get('author', {}).get('email', None)
+            user_name = commit.get('author', {}).get('username', None)
+            for m in p.finditer(message.lower()):
+                result.append({
+                    "user_id": user_name,
+                    "user_name": user_name,
+                    "user_url": os.path.join(os.path.dirname(os.path.dirname(project_url)), user_name),
+                    "commit_id": commit.get("id", None),
+                    "commit_url": commit.get("url", None),
+                    "commit_message": commit.get("message", None),
+                    "ref": m.group(1),
+                    "status_slug": m.group(2),
+                })
 
-            self._process_message(message, gogs_user)
-
-    def _process_message(self, message, gogs_user):
-        """
-          The message we will be looking for seems like
-            TG-XX #yyyyyy
-          Where:
-            XX: is the ref for us, issue or task
-            yyyyyy: is the status slug we are setting
-        """
-        if message is None:
-            return
-
-        p = re.compile("tg-(\d+) +#([-\w]+)")
-        for m in p.finditer(message.lower()):
-            ref = m.group(1)
-            status_slug = m.group(2)
-            self._change_status(ref, status_slug, gogs_user)
-
-    def _change_status(self, ref, status_slug, gogs_user):
-        if Issue.objects.filter(project=self.project, ref=ref).exists():
-            modelClass = Issue
-            statusClass = IssueStatus
-        elif Task.objects.filter(project=self.project, ref=ref).exists():
-            modelClass = Task
-            statusClass = TaskStatus
-        elif UserStory.objects.filter(project=self.project, ref=ref).exists():
-            modelClass = UserStory
-            statusClass = UserStoryStatus
-        else:
-            raise ActionSyntaxException(_("The referenced element doesn't exist"))
-
-        element = modelClass.objects.get(project=self.project, ref=ref)
-
-        try:
-            status = statusClass.objects.get(project=self.project, slug=status_slug)
-        except statusClass.DoesNotExist:
-            raise ActionSyntaxException(_("The status doesn't exist"))
-
-        element.status = status
-        element.save()
-
-        snapshot = take_snapshot(element,
-                                 comment="Status changed from Gogs commit",
-                                 user=get_gogs_user(gogs_user))
-        send_notifications(element, history=snapshot)
+        return result
