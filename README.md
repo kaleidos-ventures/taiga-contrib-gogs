@@ -1,3 +1,5 @@
+> **NOTE:** This plugin is **DEPRECATED** since Taiga 3.0.0 (2016-10-02) because it was included in the core of Taiga.
+
 Taiga contrib gogs
 ==================
 
