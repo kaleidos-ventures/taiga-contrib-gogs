@@ -88,7 +88,7 @@ After clone the repo link `dist` in `taiga-front` plugins directory:
   cd taiga-front/dist
   mkdir -p plugins
   cd plugins
-  ln -s ../../../taiga-contrib-gogs/dist gogs
+  ln -s ../../../taiga-contrib-gogs/front/dist gogs
 ```
 
 Include in 'dist/conf.json' in the 'contribPlugins' list the value `"/plugins/gogs/gogs.json"`:

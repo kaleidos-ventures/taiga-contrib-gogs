@@ -36,18 +36,3 @@ def get_or_generate_config(project):
     url = "%s?project=%s" % (url, project.id)
     g_config["webhooks_url"] = url
     return g_config
-
-
-def get_gogs_user(email):
-    user = None
-
-    if email:
-        try:
-            user = User.objects.get(email=email)
-        except User.DoesNotExist:
-            pass
-
-    if user is None:
-        user = User.objects.get(is_system=True, username__startswith="gogs")
-
-    return user
